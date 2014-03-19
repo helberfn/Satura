@@ -33,14 +33,14 @@ function Camera (xView,yView,wView,hView,wRoom,hRoom){
 	this.wRoom=wRoom;
 	this.hRoom=hRoom;
 	
-	this.follow=null;
+	this.target=null;
 	this.xDeadZone = 0;
 	this.yDeadZone = 0;
 	
 }
 
 Camera.prototype.follow= function(object,xDeadZone,yDeadZone){
-	this.follow = object;
+	this.target = object;
 	this.xDeadZone = 0 || xDeadZone;
 	this.yDeadZone = 0 || yDeadZone;
 };
@@ -59,18 +59,18 @@ Camera.prototype.filter=function(ctx){
 };
 	
 Camera.prototype.update = function(){
-	if (this.follow =! null){
+	if (this.target =! null){
 		// Movimento X
-		if(this.follow.x - this.xView  + this.xDeadZone > this.wView){
-			this.xView = this.follow.x - (this.wView - this.xDeadZone);
-		} else if(this.follow.x  - this.xDeadZone < this.xView){
-			this.xView = this.follow.x  - this.xDeadZone;
+		if(this.target.x - this.xView  + this.xDeadZone > this.wView){
+			this.xView = this.target.x - (this.wView - this.xDeadZone);
+		} else if(this.target.x  - this.xDeadZone < this.xView){
+			this.xView = this.target.x  - this.xDeadZone;
 			}
 		// Movimento Y
-		if(this.follow.y - this.yView  + this.yDeadZone > this.hView){
-			this.yView = this.follow.y - (this.hView - this.yDeadZone);
-		} else if(this.follow.y  - this.yDeadZone < this.yView){
-			this.yView = this.follow.y  - this.yDeadZone;
+		if(this.target.y - this.yView  + this.yDeadZone > this.hView){
+			this.yView = this.target.y - (this.hView - this.yDeadZone);
+		} else if(this.target.y  - this.yDeadZone < this.yView){
+			this.yView = this.target.y  - this.yDeadZone;
 			}
 	}
 };
@@ -110,6 +110,7 @@ GameEngine.prototype.init = function(ctx) {
     this.surfaceWidth = this.ctx.canvas.width;
     this.surfaceHeight = this.ctx.canvas.height;
     this.setCamera(0,0,this.surfaceWidth,this.surfaceHeight,this.surfaceWidth*2,this.surfaceHeight*2 );
+    this.start();
     console.log('game initialized');
 };
 
@@ -161,9 +162,9 @@ function Entity(x,y,visible){
 	this.exist=true;
 };
 
-Entity.prototype.update = function(){;};
+Entity.prototype.update = function(){};
 
-Entity.prototype.draw = function(ctx){;};
+Entity.prototype.draw = function(ctx){};
 
 Entity.prototype.isAlive = function(){
 	return this.exist;
