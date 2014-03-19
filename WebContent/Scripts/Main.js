@@ -14,10 +14,13 @@ ASSET_MANAGER.downloadAll(function(){
 	
 	Game.init(ctx);
 	Game.start();
+	Game.camera.follow(player,Game.surfaceWidth/2,Game.surfaceHeight/2);
+
 });
 
 player = new Player(0,0,ASSET_MANAGER.getAsset("Assets/img/teste.png"));
 
 
 Game.createEntity(player);
-Game.camera.follow(player,Game.surfaceWidth/2,Game.surfaceHeight/2);
+console.log(Game.camera);
+
