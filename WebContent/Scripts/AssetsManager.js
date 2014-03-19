@@ -7,6 +7,7 @@ function AssetManager(){
 
 AssetManager.prototype.queueDownload= function(path){
 	this.downloadQueue.push(path);
+	console.log(path);
 };
 
 AssetManager.prototype.isDone= function(){
@@ -14,19 +15,28 @@ AssetManager.prototype.isDone= function(){
 };
 
 AssetManager.prototype.downloadAll= function(callback){
-	for(var i=0 ; i< this.downloadQueue.lenght; i++){
+	console.log("Downloading...");
+	for(var i=0 ; i< this.downloadQueue.length; i++){
 		var path= this.downloadQueue[i];
 		var img= new Image();
 		var that= this;
 		
+		console.log("Download "+ i);
 		img.addEventListener("load", function(){
-			that.sucessCount=+1;}
-		,false);
+			console.log("Sucess "+ i);
+			that.sucessCount=+1;
+			if (that.isDone()){ 
+				callback();
+			}
+		},false);
 		img.addEventListener("error", function(){
-			that.errorCount=+1;}
-		,false);
-		
-		if (that.isDone()){ callback(); }
+			console.log("Error "+ i);
+			that.errorCount=+1;
+			console,log(that.errorCount);
+			if (that.isDone()){ 
+				callback();
+			}
+		}, false);
 				
 		img.src= path;
 		this.cache[path]=img;
