@@ -24,16 +24,18 @@ AssetManager.prototype.downloadAll= function(callback){
 		console.log("Download "+ i);
 		img.addEventListener("load", function(){
 			console.log("Sucess "+ i);
-			that.sucessCount=+1;
-			if (that.isDone()){ 
+			that.sucessCount+=1;
+			if (that.isDone()){
+				console.log("Done!");
 				callback();
 			}
 		},false);
 		img.addEventListener("error", function(){
 			console.log("Error "+ i);
-			that.errorCount=+1;
+			that.errorCount+=1;
 			console,log(that.errorCount);
-			if (that.isDone()){ 
+			if (that.isDone()){
+				console.log("Done!");
 				callback();
 			}
 		}, false);
